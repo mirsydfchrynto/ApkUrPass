@@ -30,20 +30,20 @@ public class app extends javax.swing.JFrame {
         });
     }
 
-    private void addContact(String jenisAkun, String username, String password) {
-        getdata newContact = new getdata(jenisAkun, username, password);
-        simpan.add(newContact);
+    private void tambah(String jenisAkun, String username, String password) {
+        getdata n = new getdata(jenisAkun, username, password);
+        simpan.add(n);
         tableModel.addRow(new Object[]{tableModel.getRowCount() + 1, jenisAkun, username, password});
     }
 
-    private void removeContact(int rowIndex) {
+    private void hapus(int rowIndex) {
         if (rowIndex >= 0) {
             simpan.remove(rowIndex);
             tableModel.removeRow(rowIndex);
         }
     }
 
-    private void editContact(int rowIndex, String jenisAkun, String username, String password) {
+    private void edit(int rowIndex, String jenisAkun, String username, String password) {
         if (rowIndex >= 0) {
             getdata g = simpan.get(rowIndex);
             g.setJenisAkun(jenisAkun);
@@ -60,11 +60,11 @@ public class app extends javax.swing.JFrame {
     tableModel.setRowCount(0);
     
     // Iterasi melalui daftar simpan dan tambahkan yang cocok
-    for (getdata contact : simpan) {
-        if (contact.getJenisAkun().toLowerCase().contains(searchText) ||
-            contact.getUsername().toLowerCase().contains(searchText) ||
-            contact.getPassword().toLowerCase().contains(searchText)) {
-            tableModel.addRow(new Object[]{tableModel.getRowCount() + 1, contact.getJenisAkun(), contact.getUsername(), contact.getPassword()});
+    for (getdata t : simpan) {
+        if (t.getJenisAkun().toLowerCase().contains(searchText) ||
+            t.getUsername().toLowerCase().contains(searchText) ||
+            t.getPassword().toLowerCase().contains(searchText)) {
+            tableModel.addRow(new Object[]{tableModel.getRowCount() + 1, t.getJenisAkun(), t.getUsername(), t.getPassword()});
         }
     }
 }
@@ -194,7 +194,7 @@ public class app extends javax.swing.JFrame {
         String jenisAkun = JOptionPane.showInputDialog("Masukkan Jenis Akun:");
         String username = JOptionPane.showInputDialog("Masukkan Username:");
         String password = JOptionPane.showInputDialog("Masukkan Password:");
-        addContact(jenisAkun, username, password);
+        tambah(jenisAkun, username, password);
         
     }//GEN-LAST:event_jButton1ActionPerformed
 
@@ -205,14 +205,14 @@ public class app extends javax.swing.JFrame {
             String jenisAkun = JOptionPane.showInputDialog("Edit Jenis Akun:", tableModel.getValueAt(selectedRow, 1));
             String username = JOptionPane.showInputDialog("Edit Username:", tableModel.getValueAt(selectedRow, 2));
             String password = JOptionPane.showInputDialog("Edit Password:", tableModel.getValueAt(selectedRow, 3));
-            editContact(selectedRow, jenisAkun, username, password);
+            edit(selectedRow, jenisAkun, username, password);
         }
     }//GEN-LAST:event_jButton4ActionPerformed
 
     private void jButton5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton5ActionPerformed
         // TODO add your handling code here:
         int selectedRow = jTable1.getSelectedRow();
-        removeContact(selectedRow);
+        hapus(selectedRow);
     }//GEN-LAST:event_jButton5ActionPerformed
 
     /**
