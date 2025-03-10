@@ -10,15 +10,15 @@ package app;
  * @author HP
  */;
 
-public class getdata {
+public final class getdata {
     private String jenisAkun;
     private String username;
     private String password;
 
     public getdata(String jenisAkun, String username, String password) {
-        this.jenisAkun = jenisAkun;
-        this.username = username;
-        this.password = password;
+        setJenisAkun(jenisAkun);
+        setUsername(username);
+        setPassword(password);
     }
 
     public String getJenisAkun() {
@@ -45,7 +45,7 @@ public class getdata {
         this.password = password;
     }
 
-    @Override
+    @Override   
     public String toString() {
         return "Jenis Akun: " + jenisAkun + ", Username: " + username + ", Password: " + password;
     }

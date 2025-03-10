@@ -19,6 +19,7 @@ public class app extends javax.swing.JFrame {
 
     public app() {
         initComponents();
+        this.setExtendedState(JFrame.MAXIMIZED_BOTH);
         simpan = new ArrayList<>();
         tableModel = (DefaultTableModel) jTable1.getModel();
             jTextField1.addKeyListener(new KeyAdapter() {
@@ -31,11 +32,26 @@ public class app extends javax.swing.JFrame {
     }
 
     private void tambah(String jenisAkun, String username, String password) {
+        try {
+            validateInput(jenisAkun, username, password);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, "Kesalahan: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+
         getdata n = new getdata(jenisAkun, username, password);
         simpan.add(n);
         tableModel.addRow(new Object[]{tableModel.getRowCount() + 1, jenisAkun, username, password});
     }
 
+    private void validateInput(String jenisAkun, String username, String password) {
+        if (jenisAkun == null || jenisAkun.trim().isEmpty()
+                || username == null || username.trim().isEmpty()
+                || password == null || password.trim().isEmpty() ) {
+            throw new IllegalArgumentException("Data tidak boleh kosong");
+        }
+    }
+    
     private void hapus(int rowIndex) {
         if (rowIndex >= 0) {
             simpan.remove(rowIndex);
@@ -44,6 +60,13 @@ public class app extends javax.swing.JFrame {
     }
 
     private void edit(int rowIndex, String jenisAkun, String username, String password) {
+        try {
+            validateInput(jenisAkun, username, password);
+        } catch (IllegalArgumentException e) {
+            JOptionPane.showMessageDialog(this, "Kesalahan: " + e.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        
         if (rowIndex >= 0) {
             getdata g = simpan.get(rowIndex);
             g.setJenisAkun(jenisAkun);
